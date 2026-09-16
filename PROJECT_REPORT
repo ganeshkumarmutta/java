@@ -1,0 +1,58 @@
+# 📄 PROJECT REPORT
+
+**Project Title:** Smart Retail & Inventory Management System (SRIMS)  
+**Course Code:** CSE2006 — Programming in Java  
+ 
+  
+
+---
+
+## 1. Executive Summary
+The **Smart Retail & Inventory Management System (SRIMS)** is a Core Java application designed to automate retail store operations. It handles product cataloging, dynamic tax computation, thread-safe concurrent stock deductions, automated activity logging via standard I/O streams, and persistent database management through both JDBC and Java Persistence API (JPA) components. 
+
+SRIMS connects theoretical Object-Oriented Programming (OOP) concepts with practical enterprise software design principles.
+
+---
+
+## 2. Course Syllabus Mapping
+
+This project explicitly implements every unit and concept outlined in the **CSE2006** syllabus:
+
+| Unit No. | Syllabus Module | Key Concepts Covered | Implementation in Code Base |
+| :--- | :--- | :--- | :--- |
+| **Unit 1** | **Java Intro & Flow Control** | JDK/JVM concepts, Data Types, Switch Statements, Loops (`for`, `while`), Operators | `Main.java` (System state control and interactive menu execution) |
+| **Unit 2** | **Java OOP (Basics & Polymorphism)** | Abstraction, Encapsulation, Single Inheritance, Method Overriding, `super` & `this` Keywords, Interfaces, Dynamic Dispatch | `model/Product.java`<br>`model/Electronics.java`<br>`service/Processable.java` |
+| **Unit 3** | **Other Class Types & Reflection** | Anonymous Inner Classes, Enums with Constructors, Singleton Pattern, Reflection API | `model/OrderStatus.java`<br>`service/InventoryManager.java`<br>`Main.java` |
+| **Unit 4** | **Exceptions, Threads & Annotations** | Custom Exceptions (`throw`/`throws`), Multithreading (`Thread` Class), Synchronization, Annotations | `annotation/ModuleInfo.java`<br>`exception/InsufficientStockException.java`<br>`service/BatchProcessor.java` |
+| **Unit 5** | **Collections, I/O, JDBC & JPA** | `ArrayList`, `Vector`, `Stack`, Jagged 2D Arrays, File I/O (`BufferedReader`/`FileWriter`), JDBC Connections, JPA ORM Entities | `service/InventoryManager.java`<br>`service/AuditLogger.java`<br>`db/DatabaseConfig.java`<br>`db/ProductJPAEntity.java` |
+
+---
+
+## 3. Architecture & System Design
+
+SRIMS uses a clean, modular layer structure to separate concerns and ensure maintainability:
+
+```text
+┌─────────────────────────────────────────────────────────────┐
+│                      PRESENTATION LAYER                     │
+│                           Main.java                         │
+└──────────────────────────────┬──────────────────────────────┘
+                               │
+                               ▼
+┌─────────────────────────────────────────────────────────────┐
+│                        SERVICE LAYER                        │
+│   InventoryManager  │  BatchProcessor  │  AuditLogger       │
+│   (Singleton)       │  (Multithreaded) │  (File Streams)    │
+└──────────────────────────────┬──────────────────────────────┘
+                               │
+                               ▼
+┌─────────────────────────────────────────────────────────────┐
+│                         MODEL LAYER                         │
+│   Product (Abstract) <─── Electronics │ OrderStatus (Enum)  │
+└──────────────────────────────┬──────────────────────────────┘
+                               │
+                               ▼
+┌─────────────────────────────────────────────────────────────┐
+│                       DATA ACCESS LAYER                     │
+│    DatabaseConfig (JDBC API)  |  ProductJPAEntity (JPA)     │
+└─────────────────────────────────────────────────────────────┘
